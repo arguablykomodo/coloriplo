@@ -1,0 +1,25 @@
+:root {
+	color-scheme: light dark;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+#grid {
+	position: relative;
+	height: 50px;
+}
+
+.swatch {
+	position: absolute;
+	width: 50px;
+	height: 50px;
+	transition: left 0.2s;
+	left: calc(var(--x) * (var(--len) - 1) * 50px);
+	background-color: color-mix(in oklab, var(--color-a), var(--color-b) calc(var(--color-x) * 100%));
+
+	&.selected {
+		border: 2px solid black;
+	}
+}
