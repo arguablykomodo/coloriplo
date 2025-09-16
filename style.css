@@ -20,8 +20,8 @@
 	transition: left 0.2s, top 0.2s;
 	left: calc(var(--x) * (var(--width) - 1) * var(--swatch-size));
 	top: calc(var(--y) * (var(--height) - 1) * var(--swatch-size));
-	--x-mix: color-mix(in oklab, var(--color-x1), var(--color-x2) calc(var(--color-x) * 100%));
-	--y-mix: color-mix(in oklab, var(--color-y1), var(--color-y2) calc(var(--color-x) * 100%));
+	--x-mix: color-mix(in oklab, var(--color-a), var(--color-b) calc(var(--color-x) * 100%));
+	--y-mix: color-mix(in oklab, var(--color-c), var(--color-d) calc(var(--color-x) * 100%));
 	background-color: color-mix(in oklab, var(--x-mix), var(--y-mix)calc(var(--color-y) * 100%));
 
 	&.selected {
@@ -30,5 +30,31 @@
 
 	&.moving {
 		z-index: 100;
+	}
+}
+
+#controls {
+	width: max-content;
+	display: grid;
+	gap: 1ch;
+	padding: 1ch;
+	grid-template-columns: max-content 1fr;
+
+	label {
+		text-align: right;
+	}
+
+	fieldset {
+		grid-column: 1 / -1;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+
+		input[type=color] {
+			width: 100%;
+		}
+	}
+
+	input[type=submit] {
+		grid-column: 1 / -1;
 	}
 }

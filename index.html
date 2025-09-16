@@ -8,6 +8,20 @@
 	</head>
 	<body>
 		<main id="grid"></main>
+		<form id="controls">
+			<label>Grid Width:</label>
+			<input name="width" type="range" min="3" max="15" value="5">
+			<label>Grid Height:</label>
+			<input name="height" type="range" min="3" max="15" value="5">
+			<fieldset>
+				<legend>Colors:</legend>
+				<input name="color-a" type="color" value="red">
+				<input name="color-b" type="color" value="green">
+				<input name="color-c" type="color" value="blue">
+				<input name="color-d" type="color" value="white">
+			</fieldset>
+			<input type="submit" value="Generate">
+		</form>
 		<script src="script.ts"></script>
 	</body>
 </html>
