@@ -15,11 +15,17 @@
 			<input name="height" type="range" min="3" max="15" value="5">
 			<fieldset>
 				<legend>Colors:</legend>
-				<input name="color-a" type="color" value="red">
-				<input name="color-b" type="color" value="green">
-				<input name="color-c" type="color" value="blue">
-				<input name="color-d" type="color" value="white">
+				<input name="colorA" type="color" value="red">
+				<input name="colorB" type="color" value="green">
+				<input name="colorC" type="color" value="blue">
+				<input name="colorD" type="color" value="white">
 			</fieldset>
+			<label>Pinned tiles:</label>
+			<select name="pinned">
+				<option value="none" selected>None</option>
+				<option value="corners">Corners</option>
+				<option value="border">Border</option>
+			</select>
 			<input type="submit" value="Generate">
 		</form>
 		<script src="script.ts"></script>

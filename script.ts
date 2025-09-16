@@ -1,15 +1,28 @@
-const grid = document.getElementById("grid")!;
+type PinnedTypes = "none" | "corners" | "border";
+interface ControlElements extends HTMLFormControlsCollection {
+  width: HTMLInputElement;
+  height: HTMLInputElement;
+  colorA: HTMLInputElement;
+  colorB: HTMLInputElement;
+  colorC: HTMLInputElement;
+  colorD: HTMLInputElement;
+  pinned: HTMLSelectElement;
+}
 
+const grid = document.getElementById("grid")!;
 const controls = document.getElementById("controls") as HTMLFormElement;
+
 controls.addEventListener("submit", (e) => {
   e.preventDefault();
+  const elements = controls.elements as ControlElements;
   setup(
-    controls.elements["width"].value,
-    controls.elements["height"].value,
-    controls.elements["color-a"].value,
-    controls.elements["color-b"].value,
-    controls.elements["color-c"].value,
-    controls.elements["color-d"].value,
+    parseInt(elements.width.value),
+    parseInt(elements.height.value),
+    elements.colorA.value,
+    elements.colorB.value,
+    elements.colorC.value,
+    elements.colorD.value,
+    elements.pinned.value as PinnedTypes,
   );
 });
 
@@ -20,6 +33,7 @@ function setup(
   colorB: string,
   colorC: string,
   colorD: string,
+  pinned: PinnedTypes,
 ) {
   grid.innerHTML = "";
   setProp(grid, "width", width);
@@ -39,7 +53,26 @@ function setup(
       setProp(swatch, "color-x", x / (width - 1));
       setProp(swatch, "y", y / (height - 1));
       setProp(swatch, "color-y", y / (height - 1));
+      let isPinned = false;
+      switch (pinned) {
+        case "none":
+          break;
+        case "corners":
+          if (x == 0 && y == 0) isPinned = true;
+          else if (x == width - 1 && y == 0) isPinned = true;
+          else if (x == 0 && y == height - 1) isPinned = true;
+          else if (x == width - 1 && y == height - 1) isPinned = true;
+          break;
+        case "border":
+          if (x == 0) isPinned = true;
+          else if (x == width - 1) isPinned = true;
+          else if (y == 0) isPinned = true;
+          else if (y == height - 1) isPinned = true;
+          break;
+      }
+      if (isPinned) swatch.classList.add("pinned");
       swatch.addEventListener("click", () => {
+        if (swatch.classList.contains("pinned")) return;
         if (selected) {
           swap(selected, swatch);
           selected.classList.remove("selected");
@@ -67,6 +100,9 @@ function setup(
     const j = Math.floor(Math.random() * (grid.childElementCount - i) + i);
     const a = grid.children[i] as HTMLElement;
     const b = grid.children[j] as HTMLElement;
+    if (a.classList.contains("pinned") || b.classList.contains("pinned")) {
+      continue;
+    }
     swap(a, b);
   }
 }

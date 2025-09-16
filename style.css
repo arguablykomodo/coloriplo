@@ -23,6 +23,9 @@
 	--x-mix: color-mix(in oklab, var(--color-a), var(--color-b) calc(var(--color-x) * 100%));
 	--y-mix: color-mix(in oklab, var(--color-c), var(--color-d) calc(var(--color-x) * 100%));
 	background-color: color-mix(in oklab, var(--x-mix), var(--y-mix)calc(var(--color-y) * 100%));
+	display: flex;
+	place-items: center;
+	justify-content: center;
 
 	&.selected {
 		border: 2px solid black;
@@ -30,6 +33,10 @@
 
 	&.moving {
 		z-index: 100;
+	}
+
+	&.pinned::after {
+		content: "🔒";
 	}
 }
 
