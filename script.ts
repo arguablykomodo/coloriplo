@@ -41,12 +41,7 @@ function setup(
       setProp(swatch, "color-y", y / (height - 1));
       swatch.addEventListener("click", () => {
         if (selected) {
-          const x = parseFloat(getProp(swatch, "x"));
-          const y = parseFloat(getProp(swatch, "y"));
-          setProp(swatch, "x", getProp(selected, "x"));
-          setProp(swatch, "y", getProp(selected, "y"));
-          setProp(selected, "x", x);
-          setProp(selected, "y", y);
+          swap(selected, swatch);
           selected.classList.remove("selected");
           selected.classList.add("moving");
           swatch.classList.add("moving");
@@ -72,13 +67,17 @@ function setup(
     const j = Math.floor(Math.random() * (grid.childElementCount - i) + i);
     const a = grid.children[i] as HTMLElement;
     const b = grid.children[j] as HTMLElement;
-    const tmp_x = getProp(a, "x");
-    const tmp_y = getProp(a, "y");
-    setProp(a, "x", getProp(b, "x"));
-    setProp(a, "y", getProp(b, "y"));
-    setProp(b, "x", tmp_x);
-    setProp(b, "y", tmp_y);
+    swap(a, b);
   }
+}
+
+function swap(a: HTMLElement, b: HTMLElement) {
+  const x = parseFloat(getProp(a, "x"));
+  const y = parseFloat(getProp(a, "y"));
+  setProp(a, "x", getProp(b, "x"));
+  setProp(a, "y", getProp(b, "y"));
+  setProp(b, "x", x);
+  setProp(b, "y", y);
 }
 
 function isSolved(): boolean {
