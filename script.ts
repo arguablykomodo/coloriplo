@@ -11,6 +11,19 @@ interface ControlElements extends HTMLFormControlsCollection {
 
 const grid = document.getElementById("grid")!;
 const controls = document.getElementById("controls") as HTMLFormElement;
+const randomize = document.getElementById("randomize") as HTMLButtonElement;
+
+randomize.addEventListener("click", (e) => {
+  e.preventDefault();
+  const elements = controls.elements as ControlElements;
+  const l = 0.7;
+  const c = 0.4;
+  const hue = Math.random() * 360;
+  elements.colorA.value = `oklch(${l} ${c} ${hue}deg)`;
+  elements.colorB.value = `oklch(${l} ${c} ${hue - 45}deg)`;
+  elements.colorC.value = `oklch(${l} ${c} ${hue + 45}deg)`;
+  elements.colorD.value = `oklch(${l} ${c} ${hue + 135}deg)`;
+});
 
 controls.addEventListener("submit", (e) => {
   e.preventDefault();

@@ -54,6 +54,7 @@
 	fieldset {
 		grid-column: 1 / -1;
 		display: grid;
+		gap: 1ch;
 		grid-template-columns: 1fr 1fr;
 
 		input[type=color] {
@@ -61,7 +62,7 @@
 		}
 	}
 
-	input[type=submit] {
+	input[type=submit], button {
 		grid-column: 1 / -1;
 	}
 }

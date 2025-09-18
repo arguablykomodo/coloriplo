@@ -13,19 +13,20 @@
 			<input name="width" type="range" min="3" max="15" value="5">
 			<label>Grid Height:</label>
 			<input name="height" type="range" min="3" max="15" value="5">
-			<fieldset>
-				<legend>Colors:</legend>
-				<input name="colorA" type="color" value="red">
-				<input name="colorB" type="color" value="green">
-				<input name="colorC" type="color" value="blue">
-				<input name="colorD" type="color" value="white">
-			</fieldset>
 			<label>Pinned tiles:</label>
 			<select name="pinned">
 				<option value="none" selected>None</option>
 				<option value="corners">Corners</option>
 				<option value="border">Border</option>
 			</select>
+			<fieldset>
+				<legend>Colors:</legend>
+				<input name="colorA" type="color" value="red">
+				<input name="colorB" type="color" value="green">
+				<input name="colorC" type="color" value="blue">
+				<input name="colorD" type="color" value="white">
+				<button id="randomize">Randomize</button>
+			</fieldset>
 			<input type="submit" value="Generate">
 		</form>
 		<script src="script.ts"></script>
