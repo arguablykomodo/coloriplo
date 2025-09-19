@@ -6,23 +6,34 @@
 	box-sizing: border-box;
 }
 
+body {
+	margin: 0;
+	display: grid;
+	place-items: center;
+}
+
 #grid {
-	--swatch-size: 50px;
 	position: relative;
-	width: calc(var(--width) * var(--swatch-size));
-	height: calc(var(--height) * var(--swatch-size));
+	width: 100dvw;
+	height: 100dvh;
+	background-color: color-mix(in oklab,
+		color-mix(in oklab, var(--color-a) 50%, var(--color-b) 50%) 50%,
+		color-mix(in oklab, var(--color-c) 50%, var(--color-d) 50%) 50%
+	);
 }
 
 .swatch {
 	position: absolute;
-	width: 50px;
-	height: 50px;
+	width: calc(100dvw / var(--width));
+	height: calc(100dvh / var(--height));
 	transition: left 0.2s, top 0.2s;
-	left: calc(var(--x) * (var(--width) - 1) * var(--swatch-size));
-	top: calc(var(--y) * (var(--height) - 1) * var(--swatch-size));
-	--x-mix: color-mix(in oklab, var(--color-a), var(--color-b) calc(var(--color-x) * 100%));
-	--y-mix: color-mix(in oklab, var(--color-c), var(--color-d) calc(var(--color-x) * 100%));
-	background-color: color-mix(in oklab, var(--x-mix), var(--y-mix)calc(var(--color-y) * 100%));
+	left: calc(100dvw / var(--width) * var(--x));
+	top: calc(100dvh / var(--height) * var(--y));
+	--mix-x: calc(var(--color-x) / (var(--width) - 1) * 100%);
+	--mix-y: calc(var(--color-y) / (var(--height) - 1) * 100%);
+	--top-mix: color-mix(in oklab, var(--color-a), var(--color-b) var(--mix-x));
+	--bottom-mix: color-mix(in oklab, var(--color-c), var(--color-d) var(--mix-x));
+	background-color: color-mix(in oklab, var(--top-mix), var(--bottom-mix) var(--mix-y));
 	display: flex;
 	place-items: center;
 	justify-content: center;
@@ -41,28 +52,50 @@
 }
 
 #controls {
-	width: max-content;
-	display: grid;
-	gap: 1ch;
-	padding: 1ch;
-	grid-template-columns: max-content 1fr;
+	position: absolute;
+	place-self: start center;
+	z-index: 200;
 
-	label {
-		text-align: right;
+	summary {
+		background: Canvas;
+		padding: 1ch;
+		cursor: pointer;
+		text-align: center;
 	}
 
-	fieldset {
-		grid-column: 1 / -1;
+	form {
+		width: max-content;
 		display: grid;
 		gap: 1ch;
-		grid-template-columns: 1fr 1fr;
+		padding: 1ch;
+		grid-template-columns: max-content 1fr;
+		background-color: Canvas;
+		backdrop-filter: blur(10px);
 
-		input[type=color] {
-			width: 100%;
+		label {
+			text-align: right;
 		}
-	}
 
-	input[type=submit], button {
-		grid-column: 1 / -1;
+		fieldset {
+			display: grid;
+			gap: 1ch;
+			grid-template-columns: 1fr 1fr;
+
+			input[type=color] {
+				width: 100%;
+			}
+		}
+
+		h2 {
+			text-align: center;
+			margin: 0.5rem 0;
+		}
+
+		input[type=submit],
+		button,
+		h2,
+		fieldset {
+			grid-column: 1 / -1;
+		}
 	}
 }

@@ -8,27 +8,31 @@
 	</head>
 	<body>
 		<main id="grid"></main>
-		<form id="controls">
-			<label>Grid Width:</label>
-			<input name="width" type="range" min="3" max="15" value="9">
-			<label>Grid Height:</label>
-			<input name="height" type="range" min="3" max="15" value="9">
-			<label>Pinned tiles:</label>
-			<select name="pinned">
-				<option value="none">None</option>
-				<option value="corners">Corners</option>
-				<option value="border" selected>Border</option>
-			</select>
-			<fieldset>
-				<legend>Colors:</legend>
-				<input name="colorA" type="color" value="#ee74b7">
-				<input name="colorB" type="color" value="#fa7851">
-				<input name="colorC" type="color" value="#921bf4">
-				<input name="colorD" type="color" value="#dadf58">
-				<button id="randomize">Randomize</button>
-			</fieldset>
-			<input type="submit" value="Generate">
-		</form>
+		<details id="controls">
+			<summary>Controls</summary>
+			<form>
+				<h2 id="win">You Won!</h2>
+				<label>Grid Width:</label>
+				<input name="width" type="range" min="3" max="15" value="9">
+				<label>Grid Height:</label>
+				<input name="height" type="range" min="3" max="15" value="9">
+				<label>Pinned tiles:</label>
+				<select name="pinned">
+					<option value="none">None</option>
+					<option value="corners">Corners</option>
+					<option value="border" selected>Border</option>
+				</select>
+				<fieldset>
+					<legend>Colors:</legend>
+					<input name="colorA" type="color" value="#ee74b7">
+					<input name="colorB" type="color" value="#fa7851">
+					<input name="colorC" type="color" value="#921bf4">
+					<input name="colorD" type="color" value="#dadf58">
+					<button id="randomize">Randomize</button>
+				</fieldset>
+				<input type="submit" value="Generate">
+			</form>
+		</details>
 		<script src="script.ts"></script>
 	</body>
 </html>

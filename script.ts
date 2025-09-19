@@ -10,12 +10,18 @@ interface ControlElements extends HTMLFormControlsCollection {
 }
 
 const grid = document.getElementById("grid")!;
-const controls = document.getElementById("controls") as HTMLFormElement;
-const randomize = document.getElementById("randomize") as HTMLButtonElement;
+const controls = document.getElementById("controls") as HTMLDetailsElement;
+const form = document.forms[0] as HTMLFormElement;
+const randomizeButton = document.getElementById("randomize") as HTMLButtonElement;
+const win = document.getElementById("win") as HTMLHeadingElement;
 
-randomize.addEventListener("click", (e) => {
+randomizeButton.addEventListener("click", (e) => {
   e.preventDefault();
-  const elements = controls.elements as ControlElements;
+  randomize();
+});
+
+function randomize() {
+  const elements = form.elements as ControlElements;
   const h = Math.random() * 360;
   const s = () => (Math.random() * 0.5 + 0.5) * 100 + "%";
   const l = () => (Math.random() * 0.2 + 0.5) * 100 + "%";
@@ -23,42 +29,35 @@ randomize.addEventListener("click", (e) => {
   elements.colorB.value = `hsl(${h + rand(10, 40)}deg ${s()} ${l()})`;
   elements.colorC.value = `hsl(${h - rand(50, 90)}deg ${s()} ${l()})`;
   elements.colorD.value = `hsl(${h + rand(50, 90)}deg ${s()} ${l()})`;
-});
+}
 
 function rand(min: number, max: number): number {
   return Math.random() * (max - min) + min;
 }
 
-controls.addEventListener("submit", (e) => {
+form.addEventListener("submit", (e) => {
   e.preventDefault();
-  const elements = controls.elements as ControlElements;
-  setup(
-    parseInt(elements.width.value),
-    parseInt(elements.height.value),
-    elements.colorA.value,
-    elements.colorB.value,
-    elements.colorC.value,
-    elements.colorD.value,
-    elements.pinned.value as PinnedTypes,
-  );
+  setup();
+  controls.open = false;
 });
 
-function setup(
-  width: number,
-  height: number,
-  colorA: string,
-  colorB: string,
-  colorC: string,
-  colorD: string,
-  pinned: PinnedTypes,
-) {
+randomize();
+setup();
+
+function setup() {
+  win.style.display = "none";
+  const elements = form.elements as ControlElements;
+  const width = parseInt(elements.width.value);
+  const height = parseInt(elements.height.value);
+  const pinned = elements.pinned.value as PinnedTypes;
+
   grid.innerHTML = "";
   setProp(grid, "width", width);
   setProp(grid, "height", height);
-  setProp(grid, "color-a", colorA);
-  setProp(grid, "color-b", colorB);
-  setProp(grid, "color-c", colorC);
-  setProp(grid, "color-d", colorD);
+  setProp(grid, "color-a", elements.colorA.value);
+  setProp(grid, "color-b", elements.colorB.value);
+  setProp(grid, "color-c", elements.colorC.value);
+  setProp(grid, "color-d", elements.colorD.value);
 
   let selected: HTMLElement | undefined;
 
@@ -66,10 +65,10 @@ function setup(
     for (let x = 0; x < width; x++) {
       const swatch = document.createElement("div");
       swatch.className = "swatch";
-      setProp(swatch, "x", x / (width - 1));
-      setProp(swatch, "color-x", x / (width - 1));
-      setProp(swatch, "y", y / (height - 1));
-      setProp(swatch, "color-y", y / (height - 1));
+      setProp(swatch, "x", x);
+      setProp(swatch, "color-x", x);
+      setProp(swatch, "y", y);
+      setProp(swatch, "color-y", y);
       let isPinned = false;
       switch (pinned) {
         case "none":
@@ -97,9 +96,8 @@ function setup(
           swatch.classList.add("moving");
           selected = undefined;
           if (isSolved()) {
-            const win = document.createElement("h1");
-            win.textContent = "WIN!!!";
-            document.body.appendChild(win);
+            win.style.display = "block";
+            controls.open = true;
           }
         } else {
           swatch.classList.add("selected");
