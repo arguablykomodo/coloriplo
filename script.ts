@@ -16,14 +16,18 @@ const randomize = document.getElementById("randomize") as HTMLButtonElement;
 randomize.addEventListener("click", (e) => {
   e.preventDefault();
   const elements = controls.elements as ControlElements;
-  const l = 0.7;
-  const c = 0.4;
-  const hue = Math.random() * 360;
-  elements.colorA.value = `oklch(${l} ${c} ${hue}deg)`;
-  elements.colorB.value = `oklch(${l} ${c} ${hue - 45}deg)`;
-  elements.colorC.value = `oklch(${l} ${c} ${hue + 45}deg)`;
-  elements.colorD.value = `oklch(${l} ${c} ${hue + 135}deg)`;
+  const h = Math.random() * 360;
+  const s = () => (Math.random() * 0.5 + 0.5) * 100 + "%";
+  const l = () => (Math.random() * 0.2 + 0.5) * 100 + "%";
+  elements.colorA.value = `hsl(${h - rand(10, 40)}deg ${s()} ${l()})`;
+  elements.colorB.value = `hsl(${h + rand(10, 40)}deg ${s()} ${l()})`;
+  elements.colorC.value = `hsl(${h - rand(50, 90)}deg ${s()} ${l()})`;
+  elements.colorD.value = `hsl(${h + rand(50, 90)}deg ${s()} ${l()})`;
 });
+
+function rand(min: number, max: number): number {
+  return Math.random() * (max - min) + min;
+}
 
 controls.addEventListener("submit", (e) => {
   e.preventDefault();
