@@ -160,3 +160,7 @@ function setProp(el: HTMLElement, name: string, val: number | string) {
 function getProp(el: HTMLElement, name: string): string {
   return el.style.getPropertyValue(`--${name}`);
 }
+
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("/sw.js").catch(console.error);
+}
