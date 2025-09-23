@@ -14,6 +14,16 @@ const controls = document.getElementById("controls") as HTMLDetailsElement;
 const form = document.forms[0] as HTMLFormElement;
 const randomizeBtn = document.getElementById("randomize") as HTMLButtonElement;
 const win = document.getElementById("win") as HTMLHeadingElement;
+const installBtn = document.getElementById("install") as HTMLButtonElement;
+
+window.addEventListener("beforeinstallprompt", (promptEvent) => {
+  promptEvent.preventDefault();
+  installBtn.hidden = false;
+  installBtn.addEventListener("click", (btnEvent) => {
+    btnEvent.preventDefault();
+    promptEvent.prompt();
+  })
+})
 
 randomizeBtn.addEventListener("click", (e) => {
   e.preventDefault();
