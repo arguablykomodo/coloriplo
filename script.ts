@@ -23,16 +23,27 @@ randomizeButton.addEventListener("click", (e) => {
 function randomize() {
   const elements = form.elements as ControlElements;
   const h = Math.random() * 360;
-  const s = () => (Math.random() * 0.5 + 0.5) * 100 + "%";
-  const l = () => (Math.random() * 0.2 + 0.5) * 100 + "%";
-  elements.colorA.value = `hsl(${h - rand(10, 40)}deg ${s()} ${l()})`;
-  elements.colorB.value = `hsl(${h + rand(10, 40)}deg ${s()} ${l()})`;
-  elements.colorC.value = `hsl(${h - rand(50, 90)}deg ${s()} ${l()})`;
-  elements.colorD.value = `hsl(${h + rand(50, 90)}deg ${s()} ${l()})`;
+  const s = () => (Math.random() * 0.5 + 0.5);
+  const l = () => (Math.random() * 0.2 + 0.5);
+  elements.colorA.value = hslToHex(h - rand(10, 40), s(), l());
+  elements.colorB.value = hslToHex(h + rand(10, 40), s(), l());
+  elements.colorC.value = hslToHex(h - rand(50, 90), s(), l());
+  elements.colorD.value = hslToHex(h + rand(50, 90), s(), l());
 }
 
 function rand(min: number, max: number): number {
   return Math.random() * (max - min) + min;
+}
+
+function hslToHex(h: number, s: number, l: number): string {
+  const h2 = (h + 360) % 360;
+  const f = (n: number) => {
+    const k = (n + h2 / 30) % 12;
+    const a = s * Math.min(l, 1 - l);
+    const v = l - a * Math.max(-1, Math.min(k - 3, 9 - k, 1));
+    return Math.floor(v * 0xFF).toString(16).padStart(2, "0");
+  };
+  return `#${f(0)}${f(8)}${f(4)}`;
 }
 
 form.addEventListener("submit", (e) => {

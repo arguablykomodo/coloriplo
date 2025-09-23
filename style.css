@@ -144,6 +144,7 @@ select {
 input[type=range] {
 	height: 2em;
 	background: transparent;
+	-webkit-appearance: none;
 
 	&::-moz-range-thumb {
 		border: none;
@@ -165,6 +166,28 @@ input[type=range] {
 		border: none;
 		background: var(--border);
 	}
+
+	&::-webkit-slider-thumb {
+		margin-top: -1em;
+		border-radius: 1em;
+		width: 1em;
+		height: 2em;
+		background: var(--button);
+		-webkit-appearance: none;
+	}
+
+	&:hover::-webkit-slider-thumb {
+		background: var(--button-hover);
+	}
+
+	&:active::-webkit-slider-thumb {
+		background: var(--button-active);
+	}
+
+	&::-webkit-slider-runnable-track {
+		height: 2px;
+		background: var(--border);
+	}
 }
 
 input[type=color] {
@@ -174,6 +197,14 @@ input[type=color] {
 	padding: 0;
 
 	&::-moz-color-swatch {
+		border: none;
+	}
+
+	&::-webkit-color-swatch-wrapper {
+		padding: 0;
+	}
+
+	&::-webkit-color-swatch {
 		border: none;
 	}
 }
