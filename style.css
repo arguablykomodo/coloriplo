@@ -1,4 +1,9 @@
 :root {
+	--bg: light-dark(#eee, #222);
+	--button: light-dark(#ddd, #333);
+	--button-hover: light-dark(#ccc, #444);
+	--button-active: light-dark(#bbb, #555);
+	--border: light-dark(#aaa, #444);
 	color-scheme: light dark;
 }
 
@@ -7,9 +12,10 @@
 }
 
 body {
-	margin: 0;
 	display: grid;
 	place-items: center;
+	margin: 0;
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 #grid {
@@ -17,26 +23,25 @@ body {
 	width: 100dvw;
 	height: 100dvh;
 	background-color: color-mix(in oklab,
-		color-mix(in oklab, var(--color-a) 50%, var(--color-b) 50%) 50%,
-		color-mix(in oklab, var(--color-c) 50%, var(--color-d) 50%) 50%
-	);
+			color-mix(in oklab, var(--color-a) 50%, var(--color-b) 50%) 50%,
+			color-mix(in oklab, var(--color-c) 50%, var(--color-d) 50%) 50%);
 }
 
 .swatch {
 	position: absolute;
+	top: calc(100dvh / var(--height) * var(--y));
+	left: calc(100dvw / var(--width) * var(--x));
+	display: flex;
+	justify-content: center;
+	place-items: center;
+	transition: left 0.2s, top 0.2s;
 	width: calc(100dvw / var(--width));
 	height: calc(100dvh / var(--height));
-	transition: left 0.2s, top 0.2s;
-	left: calc(100dvw / var(--width) * var(--x));
-	top: calc(100dvh / var(--height) * var(--y));
 	--mix-x: calc(var(--color-x) / (var(--width) - 1) * 100%);
 	--mix-y: calc(var(--color-y) / (var(--height) - 1) * 100%);
-	--top-mix: color-mix(in oklab, var(--color-a), var(--color-b) var(--mix-x));
-	--bottom-mix: color-mix(in oklab, var(--color-c), var(--color-d) var(--mix-x));
-	background-color: color-mix(in oklab, var(--top-mix), var(--bottom-mix) var(--mix-y));
-	display: flex;
-	place-items: center;
-	justify-content: center;
+	background-color: color-mix(in oklab,
+			color-mix(in oklab, var(--color-a), var(--color-b) var(--mix-x)),
+			color-mix(in oklab, var(--color-c), var(--color-d) var(--mix-x)) var(--mix-y));
 
 	&.selected {
 		border: 2px solid black;
@@ -53,24 +58,39 @@ body {
 
 #controls {
 	position: absolute;
-	place-self: start center;
 	z-index: 200;
+	place-self: start center;
+	border-radius: 0 0 1em 1em;
+	background: var(--bg);
+
+	&[open] {
+		border-radius: 0 0 2em 2em;
+	}
 
 	summary {
-		background: Canvas;
-		padding: 1ch;
-		cursor: pointer;
+		border-radius: 0 0 1em 1em;
+		padding: 0.3em 1em 0.5em;
+		background: var(--button);
 		text-align: center;
+		cursor: pointer;
+
+		&:hover {
+			background: var(--button-hover);
+		}
+
+		&:active {
+			background: var(--button-active);
+		}
 	}
 
 	form {
-		width: max-content;
 		display: grid;
-		gap: 1ch;
-		padding: 1ch;
 		grid-template-columns: max-content 1fr;
-		background-color: Canvas;
-		backdrop-filter: blur(10px);
+		align-items: center;
+		gap: 1ch;
+		width: max-content;
+		padding: 1em;
+		padding-top: 0.5em;
 
 		label {
 			text-align: right;
@@ -78,8 +98,10 @@ body {
 
 		fieldset {
 			display: grid;
-			gap: 1ch;
 			grid-template-columns: 1fr 1fr;
+			gap: 1ch;
+			border: 2px solid var(--border);
+			border-radius: 1em;
 
 			input[type=color] {
 				width: 100%;
@@ -87,8 +109,8 @@ body {
 		}
 
 		h2 {
-			text-align: center;
 			margin: 0.5rem 0;
+			text-align: center;
 		}
 
 		input[type=submit],
@@ -97,5 +119,61 @@ body {
 		fieldset {
 			grid-column: 1 / -1;
 		}
+	}
+}
+
+button,
+input[type=submit],
+select {
+	border: none;
+	border-radius: 1em;
+	height: 2em;
+	padding: 0 1ch;
+	background: var(--button);
+	font: inherit;
+
+	&:hover {
+		background: var(--button-hover);
+	}
+
+	&:active {
+		background: var(--button-active);
+	}
+}
+
+input[type=range] {
+	height: 2em;
+	background: transparent;
+
+	&::-moz-range-thumb {
+		border: none;
+		border-radius: 1em;
+		width: 1em;
+		height: 2em;
+		background: var(--button);
+	}
+
+	&:hover::-moz-range-thumb {
+		background: var(--button-hover);
+	}
+
+	&:active::-moz-range-thumb {
+		background: var(--button-active);
+	}
+
+	&::-moz-range-track {
+		border: none;
+		background: var(--border);
+	}
+}
+
+input[type=color] {
+	border: none;
+	border-radius: 1em;
+	height: 2em;
+	padding: 0;
+
+	&::-moz-color-swatch {
+		border: none;
 	}
 }
