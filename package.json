@@ -1,5 +1,5 @@
 {
-  "name": "swatchsort",
+  "name": "coloriplo",
   "private": true,
   "devDependencies": {
     "@types/bun": "latest"
