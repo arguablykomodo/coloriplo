@@ -1,5 +1,6 @@
 {
   "name": "Coloriplo",
+  "description": "Randomly generated color sorting game.",
   "icons": [{ "src": "icon.svg", "sizes": "any" }],
   "start_url": "./",
   "display": "standalone"
