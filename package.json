@@ -1,6 +1,11 @@
 {
   "name": "coloriplo",
   "private": true,
+  "scripts": {
+    "bundle": "bun build index.html sw.ts --chunk-naming [name].[ext] --asset-naming [name].[ext] --outdir _site",
+    "dev": "bun run bundle -- --watch --sourcemap",
+    "build": "bun run bundle -- --minify"
+  },
   "devDependencies": {
     "@types/bun": "latest"
   },
