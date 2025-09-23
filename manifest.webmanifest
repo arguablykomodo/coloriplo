@@ -1,0 +1,6 @@
+{
+  "name": "Coloriplo",
+  "icons": [{ "src": "icon.svg", "sizes": "any" }],
+  "start_url": "./",
+  "display": "standalone"
+}
