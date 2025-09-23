@@ -12,10 +12,10 @@ interface ControlElements extends HTMLFormControlsCollection {
 const grid = document.getElementById("grid")!;
 const controls = document.getElementById("controls") as HTMLDetailsElement;
 const form = document.forms[0] as HTMLFormElement;
-const randomizeButton = document.getElementById("randomize") as HTMLButtonElement;
+const randomizeBtn = document.getElementById("randomize") as HTMLButtonElement;
 const win = document.getElementById("win") as HTMLHeadingElement;
 
-randomizeButton.addEventListener("click", (e) => {
+randomizeBtn.addEventListener("click", (e) => {
   e.preventDefault();
   randomize();
 });
