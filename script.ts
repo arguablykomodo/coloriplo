@@ -1,4 +1,19 @@
-import { confetti, ConfettiOptions } from "@tsparticles/confetti";
+import "@melloware/coloris/dist/coloris.css";
+import Coloris from "@melloware/coloris";
+import { confetti, type ConfettiOptions } from "@tsparticles/confetti";
+
+Coloris.init();
+Coloris({
+  el: "input[type=color]",
+  theme: "polaroid",
+  wrap: false,
+  themeMode: "auto",
+  alpha: false,
+});
+
+for (const el of Array.from(document.querySelectorAll("input[type=color]"))) {
+  el.addEventListener("click", (e) => e.preventDefault());
+}
 
 type PinnedTypes = "none" | "corners" | "border";
 interface ControlElements extends HTMLFormControlsCollection {
