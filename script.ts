@@ -1,3 +1,5 @@
+import { confetti, ConfettiOptions } from "@tsparticles/confetti";
+
 type PinnedTypes = "none" | "corners" | "border";
 interface ControlElements extends HTMLFormControlsCollection {
   width: HTMLInputElement;
@@ -22,8 +24,8 @@ window.addEventListener("beforeinstallprompt", (promptEvent) => {
   installBtn.addEventListener("click", (btnEvent) => {
     btnEvent.preventDefault();
     promptEvent.prompt();
-  })
-})
+  });
+});
 
 randomizeBtn.addEventListener("click", (e) => {
   e.preventDefault();
@@ -119,6 +121,20 @@ function setup() {
           if (isSolved()) {
             win.style.display = "block";
             controls.open = true;
+            const common: ConfettiOptions = {
+              disableForReducedMotion: true,
+              zIndex: 300,
+              particleCount: 100,
+              spread: 70,
+              colors: [
+                elements.colorA.value,
+                elements.colorB.value,
+                elements.colorC.value,
+                elements.colorD.value,
+              ],
+            };
+            confetti({ ...common, angle: 45, origin: { x: 0, y: 0.6 } });
+            confetti({ ...common, angle: 135, origin: { x: 1, y: 0.6 } });
           }
         } else {
           swatch.classList.add("selected");
